@@ -1,8 +1,27 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2;netstandard2.0;net40</TargetFramework>
+    <TargetFrameworks>netcoreapp2.1;netstandard2.0;net40</TargetFrameworks>
     <RootNamespace>Mono.Cecil</RootNamespace>
     <AssemblyName>Mono.Cecil</AssemblyName>
-	<DefineConstants Condition="'$(TargetFramework)' != 'net40'">$(DefineConstants);NET_CORE;</DefineConstants>
+    <OutputType>Library</OutputType>
+	<Platforms>AnyCPU</Platforms>
+	<DefineConstants Condition="$(TargetFramework.Contains('netstandard')) OR $(TargetFramework.Contains('netcoreapp'))">$(DefineConstants);NET_CORE;</DefineConstants>
+	<NoWarn>0649</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" $(Configuration.Contains('Debug')) ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>$(DefineConstants);DEBUG;TRACE;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" $(Configuration.Contains('Release')) ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>$(DefineConstants);TRACE;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
 </Project>
