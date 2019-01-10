@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp2.2;netstandard2.0;net40</TargetFramework>
     <RootNamespace>Mono.Cecil</RootNamespace>
     <AssemblyName>Mono.Cecil</AssemblyName>
-	<DefineConstants>$(DefineConstants);NET_CORE;</DefineConstants>
+	<DefineConstants Condition="'$(TargetFramework)' != 'net40'">$(DefineConstants);NET_CORE;</DefineConstants>
   </PropertyGroup>
 </Project>
