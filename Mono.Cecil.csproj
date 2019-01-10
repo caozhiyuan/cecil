@@ -1,20 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{D68133BD-1E63-496E-9EDE-4FBDBF77B486}</ProjectGuid>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>Mono.Cecil</RootNamespace>
     <AssemblyName>Mono.Cecil</AssemblyName>
+	<DefineConstants>$(DefineConstants);NET_CORE;</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="ProjectInfo.cs" />
-    <Compile Include="Mono\*.cs" />
-    <Compile Include="Mono.Cecil\*.cs" />
-    <Compile Include="Mono.Cecil.Cil\*.cs" />
-    <Compile Include="Mono.Cecil.Metadata\*.cs" />
-    <Compile Include="Mono.Cecil.PE\*.cs" />
-    <Compile Include="Mono.Collections.Generic\*.cs" />
-    <Compile Include="Mono.Security.Cryptography\*.cs" />
-  </ItemGroup>
-  <Import Project="Mono.Cecil.props" />
-  <Import Project="$(MSBuildCSharpTargets)" Condition=" ! $(NetStandard) " />
 </Project>
