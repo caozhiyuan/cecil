@@ -212,8 +212,6 @@ namespace Mono.Cecil {
 		ISymbolWriterProvider symbol_writer_provider;
 		bool write_symbols;
 #if !NET_CORE
-		byte[] sn_key_blob;
-		string sn_key_container;
 		SR.StrongNameKeyPair key_pair;
 #endif
 
@@ -238,21 +236,6 @@ namespace Mono.Cecil {
 		}
 
 #if !NET_CORE
-		public bool HasStrongNameKey {
-			get { return key_pair != null || sn_key_blob != null || sn_key_container != null; }
-		}
-
-		public byte[] StrongNameKeyBlob {
-			get { return sn_key_blob; }
-			set { sn_key_blob = value; }
-		}
-
-		public string StrongNameKeyContainer {
-			get { return sn_key_container; }
-			set { sn_key_container = value; }
-		}
-
-		[Obsolete ("Use StrongNameKeyBlob/StrongNameKeyContainer")]
 		public SR.StrongNameKeyPair StrongNameKeyPair {
 			get { return key_pair; }
 			set { key_pair = value; }
@@ -284,8 +267,11 @@ namespace Mono.Cecil {
 		TargetArchitecture architecture;
 		ModuleAttributes attributes;
 		ModuleCharacteristics characteristics;
-		internal ushort linker_version = 8;
 		Guid mvid;
+
+		internal ushort linker_version = 8;
+		internal ushort subsystem_major = 4;
+		internal ushort subsystem_minor = 0;
 		internal uint timestamp;
 
 		internal AssemblyDefinition assembly;
@@ -303,6 +289,10 @@ namespace Mono.Cecil {
 		TypeDefinitionCollection types;
 
 		internal Collection<CustomDebugInformation> custom_infos;
+
+#if !READ_ONLY
+		internal MetadataBuilder metadata_builder;
+#endif
 
 		public bool IsMain {
 			get { return kind != ModuleKind.NetModule; }
@@ -604,6 +594,8 @@ namespace Mono.Cecil {
 			this.attributes = image.Attributes;
 			this.characteristics = image.Characteristics;
 			this.linker_version = image.LinkerVersion;
+			this.subsystem_major = image.SubSystemMajor;
+			this.subsystem_minor = image.SubSystemMinor;
 			this.file_name = image.FileName;
 			this.timestamp = image.Timestamp;
 
